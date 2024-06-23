@@ -41,7 +41,7 @@ public class VersioningPersonController {
     }
 
 
-    // Content Negotiation Versioning  - GitHub
+    // Media Type Versioning/ Content Negotiation Versioning  - GitHub
 
     @GetMapping(path = "/person/accept", produces = "application/vnd.company.app-v1+json")
     public PersonV1 getPersonAcceptHeaderV1() {
