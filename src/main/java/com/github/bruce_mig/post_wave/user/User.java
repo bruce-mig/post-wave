@@ -1,5 +1,6 @@
 package com.github.bruce_mig.post_wave.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -17,5 +18,6 @@ public class User {
     @Size(min=2, message = "Name should have at least 2 characters")
     private String name;
     @Past(message = "Birth date should be in the past")
+    @JsonProperty("birth_date")
     private LocalDate birthDate;
 }
