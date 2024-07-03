@@ -9,7 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@Configuration
+//@Configuration
 public class SecurityConfiguration {
 
     /* Filter chain
@@ -18,7 +18,7 @@ public class SecurityConfiguration {
     * disabling csrf requires stateless session
     * stateless rest api
     * */
-    @Bean
+//    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
          return http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .httpBasic(withDefaults())
