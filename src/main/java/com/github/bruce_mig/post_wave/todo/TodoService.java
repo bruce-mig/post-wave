@@ -5,14 +5,15 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 @Service
 public class TodoService {
 
-    private static List<Todo> todos = new ArrayList<>();
+    private static final List<Todo> todos = new ArrayList<>();
 
-    private static int todosCount = 0;
+    private static Integer todosCount = 0;
 
     static {
         todos.add(new Todo(++todosCount, "name","Get AWS Certified",
@@ -25,7 +26,7 @@ public class TodoService {
 
     public List<Todo> findByUsername(String username){
         Predicate<? super Todo> predicate =
-                todo -> todo.username().equalsIgnoreCase(username);
+                todo -> todo.getUsername().equalsIgnoreCase(username);
         return todos.stream().filter(predicate).toList();
     }
 
@@ -36,18 +37,22 @@ public class TodoService {
     }
 
     public void deleteById(int id) {
-        Predicate<? super Todo> predicate = todo -> todo.id() == id;
+        Predicate<? super Todo> predicate = todo -> todo.getId() == id;
         todos.removeIf(predicate);
     }
 
     public Todo findById(int id) {
-        Predicate<? super Todo> predicate = todo -> todo.id() == id;
-        Todo todo = todos.stream().filter(predicate).findFirst().get();
-        return todo;
+        Predicate<? super Todo> predicate = todo -> todo.getId() == id;
+        return todos.stream()
+                .filter(predicate)
+                .findFirst()
+                .orElseThrow(
+                        () -> new NoSuchElementException("Todo not found with id: " + id)
+                );
     }
 
     public void updateTodo(Todo todo) {
-        deleteById(todo.id());
+        deleteById(todo.getId());
         todos.add(todo);
     }
 }
