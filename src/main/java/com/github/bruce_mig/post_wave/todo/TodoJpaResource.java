@@ -1,5 +1,6 @@
 package com.github.bruce_mig.post_wave.todo;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +12,13 @@ public class TodoJpaResource {
 
     public final TodoRepository todoRepository;
 
-    public TodoJpaResource(TodoService todoService, TodoRepository todoRepository) {
+    public TodoJpaResource(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
     }
 
     @GetMapping("/users/{username}/todos")
-    public List<Todo> retrieveTodos(@PathVariable String username){
-        return todoRepository.findByUsername(username);
+    public  ResponseEntity<List<Todo>> retrieveTodos(@PathVariable String username){
+        return new ResponseEntity<>(todoRepository.findByUsername(username), HttpStatus.OK) ;
     }
 
     @GetMapping("/users/{username}/todos/{id}")
